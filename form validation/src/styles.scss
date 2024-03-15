@@ -1,5 +1,11 @@
-$body-color: red;
-
-body {
-    color: $body-color;
+form {
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }
