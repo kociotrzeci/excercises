@@ -4,9 +4,7 @@
   "description": "todo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "git subtree push --prefix dist origin gh-pages",
-    "republish": "git push gh-pages"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -28,11 +26,6 @@
   },
   "dependencies": {
     "css-loader": "^6.10.0",
-<<<<<<< HEAD
-=======
-    "date-fns": "^3.3.1",
-    "lodash": "^4.17.21",
->>>>>>> 1a1c2cc4b4d9132947ec4a5bb6dff43bc8b34e22
     "style-loader": "^3.3.4"
   }
 }
