@@ -1,0 +1,38 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "git subtree push --prefix dist origin gh-pages",
+    "republish": "git push gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kociotrzeci/ToDo.git"
+  },
+  "author": "kociotrzeci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kociotrzeci/ToDo/issues"
+  },
+  "homepage": "https://github.com/kociotrzeci/ToDo#readme",
+  "devDependencies": {
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "sass": "^1.70.0",
+    "sass-loader": "^14.1.0",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "css-loader": "^6.10.0",
+<<<<<<< HEAD
+=======
+    "date-fns": "^3.3.1",
+    "lodash": "^4.17.21",
+>>>>>>> 1a1c2cc4b4d9132947ec4a5bb6dff43bc8b34e22
+    "style-loader": "^3.3.4"
+  }
+}
