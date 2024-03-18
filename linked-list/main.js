@@ -1,41 +1,101 @@
 console.log("Linked List Test");
 
-class linkedList {
-  constructor() {
-    let firstNode = null;
-    let lastNode = null;
-  }
-  append(value) {
-    if (!firstNode) {
-      firstNode = new Node(value);
-      lastNode = firstNode;
-      return;
-    } else {
-      lastNode.next = new Node(value);
-      lastNode = lastNode.next;
-    }
-  }
-  print() {
-    console.log("Printing linked list: ");
-    p;
-  }
-}
 function Node(value) {
   this.value = value;
   this.next = null;
   this.addNextNode = function (value) {
-    this.next = new Node(value);
+    this.next = Node(value);
   };
-  this.print = function () {
-    console.log(this.value);
+  this.returnString = function () {
+    let string = `(${this.value}) -> `;
     if (this.next === null) {
-      console.log("null");
-      return;
-    } else this.next.print();
+      return string + " null";
+    } else return string + this.next.returnString();
   };
-  return this;
+  return {
+    value: this.value,
+    next: this.next,
+    addNextNode: this.addNextNode,
+    returnString: this.returnString,
+  };
+}
+class linkedList {
+  constructor() {
+    this.firstNode = null;
+    this.lastNode = null;
+  }
+  append(value) {
+    if (this.firstNode === null) {
+      this.firstNode = Node(value);
+      this.lastNode = this.firstNode;
+      return;
+    } else {
+      this.lastNode.next = Node(value);
+      this.lastNode = this.lastNode.next;
+    }
+  }
+  prepend(value) {
+    if (this.firstNode === null) {
+      this.firstNode = Node(value);
+      this.lastNode = this.firstNode;
+      return;
+    } else {
+      let tempNode = this.firstNode;
+      this.firstNode = Node(value);
+      this.firstNode.next = tempNode;
+    }
+  }
+  size() {
+    let count = 0;
+    let current = this.firstNode;
+    while (current) {
+      count++;
+      current = current.next;
+    }
+    return count;
+  }
+  head() {
+    return this.firstNode;
+  }
+  tail() {
+    return this.lastNode;
+  }
+  at(index) {
+    if (index >= this.size() || index < 0) return null;
+    let count = 0;
+    let node = this.firstNode;
+    while (node) {
+      if (count === index) {
+        return node;
+      }
+      count++;
+      node = node.next;
+    }
+  }
+  pop() {
+    if (this.firstNode === null) return;
+
+    this.at(this.size() - 2).next = null;
+    this.LastNode = this.at(this.size() - 2);
+  }
+  print() {
+    console.log("Printing linked list: " + this.firstNode.returnString());
+  }
 }
 
-let node = new Node("first");
-node.addNextNode("second");
-node.print();
+const list = new linkedList();
+list.append("first");
+list.append("second");
+list.append("third");
+list.append("fourth");
+list.prepend("zeroth");
+list.print();
+console.log(`size of list: ${list.size()}`);
+console.log(`head of list: ${list.head().value}`);
+console.log(`tail of list: ${list.tail().value}`);
+console.log(list.at(2).value);
+list.pop();
+list.print();
+console.log(`size of list: ${list.size()}`);
+console.log(`head of list: ${list.head().value}`);
+console.log(`tail of list: ${list.tail().value}`);
