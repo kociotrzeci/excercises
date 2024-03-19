@@ -1,25 +1,4 @@
-console.log("Linked List Test");
-
-function Node(value) {
-  this.value = value;
-  this.next = null;
-  this.addNextNode = function (value) {
-    this.next = Node(value);
-  };
-  this.returnString = function () {
-    let string = `(${this.value}) -> `;
-    if (this.next === null) {
-      return string + " null";
-    } else return string + this.next.returnString();
-  };
-  return {
-    value: this.value,
-    next: this.next,
-    addNextNode: this.addNextNode,
-    returnString: this.returnString,
-  };
-}
-class linkedList {
+class LinkedList {
   constructor() {
     this.firstNode = null;
     this.lastNode = null;
@@ -104,22 +83,67 @@ class linkedList {
     return null;
   }
 }
+function Node(value) {
+  this.value = value;
+  this.next = null;
+  this.addNextNode = function (value) {
+    this.next = Node(value);
+  };
+  this.returnString = function () {
+    let string = `(${this.value}) -> `;
+    if (this.next === null) {
+      return string + " null";
+    } else return string + this.next.returnString();
+  };
+  return {
+    value: this.value,
+    next: this.next,
+    addNextNode: this.addNextNode,
+    returnString: this.returnString,
+  };
+}
+class HashMap {
+  constructor() {
+    const LOAD_FACTOR = 0.75;
+    this.capacity = 16;
+    this.map = new Array(this.capacity);
+    this.map.fill(new LinkedList());
+  }
+  hash(key) {
+    let hashCode = 0;
+    const primeNumber = 17;
+    for (let i = 0; i < key.length; i++) {
+      hashCode = primeNumber * hashCode + key.charCodeAt(i);
+    }
+    return hashCode % this.capacity;
+  }
+  set(key, value) {
+    let index = this.hash(key);
+    this.map[index].append({ key, value });
+    console.log(
+      `added ${this.map[index].lastNode.value.key} ${this.map[index].lastNode.value.value} to bucket ${index}`
+    );
+  }
 
-const list = new linkedList();
-list.append("first");
-list.append("second");
-list.append("third");
-list.append("fourth");
-list.prepend("zeroth");
-list.print();
-console.log(`size of list: ${list.size()}`);
-console.log(`head of list: ${list.head().value}`);
-console.log(`tail of list: ${list.tail().value}`);
-console.log(list.at(2).value);
-list.pop();
-list.print();
-console.log(`size of list: ${list.size()}`);
-console.log(`head of list: ${list.head().value}`);
-console.log(`tail of list: ${list.tail().value}`);
-console.log(list.contains("fourth"));
-console.log(list.find("third"));
+  entries() {
+    let result = [];
+    for (let i = 1; i < 2; i++) {
+      let currentBucket = this.map[i];
+      for (let j = 0; j < currentBucket.size(); j++) {
+        result.push(currentBucket.at(j).value);
+      }
+    }
+    return result;
+  }
+}
+
+const hashMap = new HashMap();
+hashMap.set("Bob", "Marley");
+hashMap.set("oBb", "Marley");
+hashMap.set("Henryk", "Sienkiewicz");
+hashMap.set("Alexander", "Dumas");
+hashMap.set("Name", "Jose");
+let array = hashMap.entries();
+for (let i = 0; i < array.length; i++) {
+  console.log(array[i]);
+}
