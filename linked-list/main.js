@@ -81,6 +81,28 @@ class linkedList {
   print() {
     console.log("Printing linked list: " + this.firstNode.returnString());
   }
+  contains(value) {
+    let current = this.firstNode;
+    while (current) {
+      if (current.value === value) {
+        return true;
+      }
+      current = current.next;
+    }
+    return false;
+  }
+  find(value) {
+    let current = this.firstNode;
+    let i = 0;
+    while (current) {
+      if (current.value === value) {
+        return i;
+      }
+      i++;
+      current = current.next;
+    }
+    return null;
+  }
 }
 
 const list = new linkedList();
@@ -99,3 +121,5 @@ list.print();
 console.log(`size of list: ${list.size()}`);
 console.log(`head of list: ${list.head().value}`);
 console.log(`tail of list: ${list.tail().value}`);
+console.log(list.contains("fourth"));
+console.log(list.find("third"));
