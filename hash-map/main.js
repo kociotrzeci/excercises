@@ -82,6 +82,12 @@ class LinkedList {
     }
     return null;
   }
+  remove(value) {
+    let findIndex = this.find(value);
+    let previous = this.at(findIndex - 1);
+    let current = this.at(findIndex);
+    previous.next = current.next;
+  }
 }
 function Node(value) {
   this.value = value;
@@ -107,7 +113,9 @@ class HashMap {
     const LOAD_FACTOR = 0.75;
     this.capacity = 16;
     this.map = new Array(this.capacity);
-    this.map.fill(new LinkedList());
+    for (let i = 0; i < this.capacity; i++) {
+      this.map[i] = new LinkedList();
+    }
   }
   hash(key) {
     let hashCode = 0;
@@ -119,21 +127,41 @@ class HashMap {
   }
   set(key, value) {
     let index = this.hash(key);
-    this.map[index].append({ key, value });
+    this.map[index].append([key, value]);
     console.log(
-      `added ${this.map[index].lastNode.value.key} ${this.map[index].lastNode.value.value} to bucket ${index}`
+      `added ${this.map[index].lastNode.value[0]} ${this.map[index].lastNode.value[1]} to bucket ${index}`
     );
   }
-
+  has(key) {
+    let index = this.hash(key);
+    for (let i = 0; i < this.map[index].size(); i++) {
+      if (this.map[index].at(i).value[0] === key) return true;
+    }
+    return false;
+  }
+  get(key) {
+    let index = this.hash(key);
+    for (let i = 0; i < this.map[index].size(); i++) {
+      if (this.map[index].at(i).value[0] === key)
+        return this.map[index].at(i).value[1];
+    }
+    return false;
+  }
   entries() {
     let result = [];
-    for (let i = 1; i < 2; i++) {
+    for (let i = 0; i < this.capacity; i++) {
       let currentBucket = this.map[i];
       for (let j = 0; j < currentBucket.size(); j++) {
-        result.push(currentBucket.at(j).value);
+        result.push([
+          currentBucket.at(j).value[0],
+          currentBucket.at(j).value[0],
+        ]);
       }
     }
     return result;
+  }
+  remove(key) {
+    let index = this.hash(key);
   }
 }
 
@@ -144,6 +172,6 @@ hashMap.set("Henryk", "Sienkiewicz");
 hashMap.set("Alexander", "Dumas");
 hashMap.set("Name", "Jose");
 let array = hashMap.entries();
-for (let i = 0; i < array.length; i++) {
-  console.log(array[i]);
-}
+console.log(array);
+console.log(hashMap.get("Bob"));
+console.log(hashMap.has("Henryk"));
