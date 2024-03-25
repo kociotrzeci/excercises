@@ -1,5 +1,5 @@
-function Node() {
-  let data = null;
+function Node(value = null) {
+  let data = value;
   let left = null;
   let right = null;
   return { data, left, right };
@@ -17,8 +17,6 @@ function Tree(array) {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
-  const root = buildTree(array);
-  prettyPrint(root);
   function buildTree(array, isLeft = true, doIsort = true) {
     if (array.length === 0) return null;
     if (doIsort) {
@@ -32,11 +30,65 @@ function Tree(array) {
     topElement.right = buildTree(array.slice(middleItarator + 1), false, false);
     return topElement;
   }
-  return { root };
+  function insert(value, node = root) {
+    if (value > node.data) {
+      if (node.right === null) {
+        node.right = Node(value);
+        console.log(`inserted ${value}`);
+        return 1;
+      }
+      insert(value, node.right);
+    }
+    if (value < node.data) {
+      if (node.left === null) {
+        node.left = Node(value);
+        console.log(`inserted ${value}`);
+        return 1;
+      }
+      insert(value, node.left);
+    }
+    if (node.data === value) return 0;
+  }
+  function deleteItem(value, node = root) {
+    if (value > node.data) {
+      if (deleteItem(value, node.right) === 1) node.right = null;
+      return 0;
+    }
+    if (value < node.data) {
+      if (deleteItem(value, node.left) === 1) node.left = null;
+      return 0;
+    }
+    if (node.data === value) {
+      if (node.left === null && node.right === null) {
+        return 1;
+      }
+      if (node.left != null && node.right != null) {
+        //2 succesors
+        return 2;
+      }
+      if (node.left != null) {
+        node = node.left;
+        return 3;
+      }
+      if (node.right != null) {
+        node = node.right;
+        return 3;
+      }
+    }
+  }
+  function addTestNodes(size = 1) {
+    for (let i = 0; i < size; i++) {
+      insert(Math.floor(Math.random() * 100));
+    }
+  }
+  const root = buildTree(array);
+  prettyPrint(root);
+  return { root, insert, prettyPrint, addTestNodes };
 }
 
 let tree = Tree(testArray(10));
-const array = [0, 5, 9, 92, 2, 100, 10];
+tree.addTestNodes(10);
+tree.prettyPrint(tree.root);
 function testArray(size = 100) {
   let array = [];
   for (let i = 0; i < size; i++) {
