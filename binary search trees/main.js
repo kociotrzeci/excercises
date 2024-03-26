@@ -101,6 +101,10 @@ function Tree(array) {
     else if (node.data === value) return node;
     else return "no data";
   }
+  function levelOrder(callback = null) {
+    const queue = [];
+  }
+
   const root = buildTree(array);
   prettyPrint(root);
   return { root, insert, prettyPrint, addTestNodes, insert, deleteItem, find };
