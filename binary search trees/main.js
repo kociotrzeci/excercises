@@ -51,11 +51,21 @@ function Tree(array) {
   }
   function deleteItem(value, node = root) {
     if (value > node.data) {
-      if (deleteItem(value, node.right) === 1) node.right = null;
+      const mode = deleteItem(value, node.right);
+      if (mode === 1) node.left = null;
+      if (mode === 3) {
+        node.right = node.right.left;
+      }
+      if (mode === 4) node.right = node.right.right;
       return 0;
     }
     if (value < node.data) {
-      if (deleteItem(value, node.left) === 1) node.left = null;
+      const mode = deleteItem(value, node.left);
+      if (mode === 1) node.left = null;
+      if (mode === 3) {
+        node.left = node.left.left;
+      }
+      if (mode === 4) node.left = node.left.right;
       return 0;
     }
     if (node.data === value) {
@@ -63,16 +73,20 @@ function Tree(array) {
         return 1;
       }
       if (node.left != null && node.right != null) {
-        //2 succesors
+        let tempNode = node.right;
+        while (tempNode.left != null) {
+          tempNode = tempNode.left;
+        }
+        deleteItem(tempNode.data);
+        node.data = tempNode.data;
         return 2;
       }
-      if (node.left != null) {
-        node = node.left;
+      if (node.left != null && node.right === null) {
         return 3;
       }
-      if (node.right != null) {
+      if (node.right != null && node.left === null) {
         node = node.right;
-        return 3;
+        return 4;
       }
     }
   }
@@ -81,14 +95,21 @@ function Tree(array) {
       insert(Math.floor(Math.random() * 100));
     }
   }
+  function find(value, node = root) {
+    if (value > node.data && node.right) return find(value, node.right);
+    else if (value < node.data && node.left) return find(value, node.left);
+    else if (node.data === value) return node;
+    else return "no data";
+  }
   const root = buildTree(array);
   prettyPrint(root);
-  return { root, insert, prettyPrint, addTestNodes };
+  return { root, insert, prettyPrint, addTestNodes, insert, deleteItem, find };
 }
 
-let tree = Tree(testArray(10));
-tree.addTestNodes(10);
+let tree = Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 tree.prettyPrint(tree.root);
+tree.prettyPrint(tree.root);
+console.log(tree.find(11));
 function testArray(size = 100) {
   let array = [];
   for (let i = 0; i < size; i++) {
