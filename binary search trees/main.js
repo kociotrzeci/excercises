@@ -103,17 +103,55 @@ function Tree(array) {
   }
   function levelOrder(callback = null) {
     const queue = [];
+    const values = [];
+    queue.push(root);
+    while (0 < queue.length) {
+      if (queue[0].left) queue.push(queue[0].left);
+      if (queue[0].right) queue.push(queue[0].right);
+      values.push(queue.shift().data);
+    }
+    if (callback === null) return values;
+    else {
+      values.forEach((value) => callback(value));
+    }
   }
+  function inOrder(callback = null, node = root) {
+    let values = [];
+    if (node !== undefined) {
+      if (node.left) {
+        values = values.concat(inOrder(callback, node.left));
+      }
+      if (node.data !== undefined) {
+        values.push(node.data);
+      }
+      if (node.right) {
+        values = values.concat(inOrder(callback, node.right));
+      }
+    }
 
+    if (callback === null) return values;
+    else {
+      values.forEach((value) => callback(value));
+    }
+  }
   const root = buildTree(array);
   prettyPrint(root);
-  return { root, insert, prettyPrint, addTestNodes, insert, deleteItem, find };
+  return {
+    root,
+    insert,
+    prettyPrint,
+    addTestNodes,
+    insert,
+    deleteItem,
+    find,
+    levelOrder,
+    inOrder,
+  };
 }
 
-let tree = Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-tree.prettyPrint(tree.root);
-tree.prettyPrint(tree.root);
-console.log(tree.find(11));
+let tree = Tree(testArray(10));
+tree.inOrder(console.log);
+console.log("breakpoint");
 function testArray(size = 100) {
   let array = [];
   for (let i = 0; i < size; i++) {
