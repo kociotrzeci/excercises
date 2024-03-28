@@ -119,19 +119,64 @@ function Tree(array) {
     let values = [];
     if (node !== undefined) {
       if (node.left) {
-        values = values.concat(inOrder(callback, node.left));
+        values = values.concat(inOrder(null, node.left));
       }
       if (node.data !== undefined) {
         values.push(node.data);
       }
       if (node.right) {
-        values = values.concat(inOrder(callback, node.right));
+        values = values.concat(inOrder(null, node.right));
       }
     }
-
     if (callback === null) return values;
     else {
-      values.forEach((value) => callback(value));
+      values.forEach((value) => {
+        callback(value);
+      });
+    }
+  }
+  function preOrder(callback = null, node = root) {
+    let values = [];
+    if (node !== undefined) {
+      if (node.data !== undefined) {
+        values.push(node.data);
+        values;
+      }
+      if (node.left) {
+        values = values.concat(preOrder(null, node.left));
+        values;
+      }
+
+      if (node.right) {
+        values = values.concat(preOrder(null, node.right));
+        values;
+      }
+    }
+    if (callback === null) return values;
+    else {
+      values.forEach((value) => {
+        callback(value);
+      });
+    }
+  }
+  function postOrder(callback = null, node = root) {
+    let values = [];
+    if (node !== undefined) {
+      if (node.left) {
+        values = values.concat(postOrder(null, node.left));
+      }
+      if (node.right) {
+        values = values.concat(postOrder(null, node.right));
+      }
+      if (node.data !== undefined) {
+        values.push(node.data);
+      }
+    }
+    if (callback === null) return values;
+    else {
+      values.forEach((value) => {
+        callback(value);
+      });
     }
   }
   const root = buildTree(array);
@@ -146,11 +191,13 @@ function Tree(array) {
     find,
     levelOrder,
     inOrder,
+    preOrder,
+    postOrder,
   };
 }
 
 let tree = Tree(testArray(10));
-tree.inOrder(console.log);
+console.log(tree.postOrder());
 console.log("breakpoint");
 function testArray(size = 100) {
   let array = [];
