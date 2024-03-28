@@ -5,7 +5,7 @@ function Node(value = null) {
   return { data, left, right };
 }
 function Tree(array) {
-  const prettyPrint = (node, prefix = "", isLeft = true) => {
+  const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
     }
@@ -34,7 +34,6 @@ function Tree(array) {
     if (value > node.data) {
       if (node.right === null) {
         node.right = Node(value);
-        console.log(`inserted ${value}`);
         return 1;
       }
       insert(value, node.right);
@@ -42,7 +41,6 @@ function Tree(array) {
     if (value < node.data) {
       if (node.left === null) {
         node.left = Node(value);
-        console.log(`inserted ${value}`);
         return 1;
       }
       insert(value, node.left);
@@ -179,10 +177,30 @@ function Tree(array) {
       });
     }
   }
-  const root = buildTree(array);
-  prettyPrint(root);
+  function height(node) {
+    if (node === null) return -1;
+    return Math.max(height(node.left), height(node.right)) + 1;
+  }
+  function depth(node) {
+    return height(root) - height(node); //i know i shoudnt
+  }
+  function isBalanced(node = root) {
+    if (node === null) return true;
+    const heightDifference = Math.abs(height(node.left) - height(node.right));
+    if (heightDifference > 1) return false;
+    else return isBalanced(node.left) && isBalanced(node.right);
+  }
+  function rebalance() {
+    if (isBalanced()) return "already balanced";
+    const array = this.inOrder();
+    root = null;
+    root = buildTree(array);
+    console.log(inOrder());
+    return "balanced";
+  }
+
+  let root = buildTree(array);
   return {
-    root,
     insert,
     prettyPrint,
     addTestNodes,
@@ -193,12 +211,22 @@ function Tree(array) {
     inOrder,
     preOrder,
     postOrder,
+    height,
+    depth,
+    isBalanced,
+    rebalance,
   };
 }
 
 let tree = Tree(testArray(10));
-console.log(tree.postOrder());
-console.log("breakpoint");
+tree.prettyPrint();
+console.log(`tree balanced: ${tree.isBalanced()}`);
+tree.addTestNodes(10);
+tree.prettyPrint();
+console.log(`tree balanced: ${tree.isBalanced()}`);
+tree.rebalance();
+tree.prettyPrint();
+console.log(`tree balanced: ${tree.isBalanced()}`);
 function testArray(size = 100) {
   let array = [];
   for (let i = 0; i < size; i++) {
