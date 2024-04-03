@@ -1,17 +1,21 @@
 function field(place) {
   const travels = [];
-
+  let visited = false;
   function addTravel(place) {
     travels.push(place);
+  }
+  function getTravels() {
+    return travels;
   }
   return {
     place,
     addTravel,
-    travels,
+    getTravels,
+    visited,
   };
 }
 
-function board() {
+function Board() {
   const moveMatrix = [
     [-2, -1],
     [-1, -2],
@@ -42,16 +46,14 @@ function board() {
   return fields;
 }
 
-function knightTour(startField, endField) {
-  x1 = startField[0];
-  y1 = startField[1];
-  x2 = endField[0];
-  const chessboard = board();
+function knightTour(startField, endField, maxSteps = 1000, step) {
+  if (x1 === endField[0] && y1 === endField[1]) {
+    console.log("znalazłem");
+    return 1;
+  }
   const queue = [];
-  chessboard[x1][y2].travels.forEach((field) => {
-    queue.push(field);
-  });
-  console.log(queue);
+  queue.push(startField);
+  const board = Board();
 }
 
-knightTour([1, 5], [8, 3]);
+knightTour([1, 5], [2, 3]);
