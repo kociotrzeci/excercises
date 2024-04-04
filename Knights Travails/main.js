@@ -12,6 +12,7 @@ function field(place) {
     addTravel,
     getTravels,
     visited,
+    travels,
   };
 }
 
@@ -46,14 +47,27 @@ function Board() {
   return fields;
 }
 
-function knightTour(startField, endField, maxSteps = 1000, step) {
-  if (x1 === endField[0] && y1 === endField[1]) {
-    console.log("znalazłem");
-    return 1;
-  }
-  const queue = [];
-  queue.push(startField);
+function knightTour(startField, endField) {
   const board = Board();
+  const queue = [board[startField[0]][startField[1]]];
+  queue[0].path = queue[0].place;
+  let found = false;
+  let currentField = null;
+  while (queue.length > 0 && found === false) {
+    currentField = queue.shift();
+    currentField.visited = true;
+    currentField.travels.forEach((field) => {
+      if (!field.visited) {
+        field.path = `${currentField.path} => ${field.place}`;
+        if (field.place[0] === endField[0] && field.place[1] === endField[1]) {
+          found = field.path;
+          return;
+        }
+        queue.push(field);
+      }
+    });
+  }
+  return found;
 }
 
-knightTour([1, 5], [2, 3]);
+console.log(knightTour([1, 5], [7, 3]));
