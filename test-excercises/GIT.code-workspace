@@ -1,0 +1,89 @@
+{
+  "folders": [
+    {
+      "path": "../.."
+    },
+    {
+      "name": "weather-app",
+      "path": "../../weather-app"
+    },
+    {
+      "name": "webpack-boilerplate",
+      "path": "../webpack-boilerplate"
+    },
+    {
+      "name": "ToDo",
+      "path": "../../ToDo"
+    },
+    {
+      "name": "test-excercises",
+      "path": "."
+    },
+    {
+      "name": "form validation",
+      "path": "../form validation"
+    },
+    {
+      "name": "APIs",
+      "path": "../APIs"
+    },
+    {
+      "name": "javascript-exercises",
+      "path": "../../javascript-exercises"
+    },
+    {
+      "name": "Restaurant-page",
+      "path": "../../JS/Restaurant-page"
+    },
+    {
+      "name": "generator-exercise",
+      "path": "../../javascript-exercises/generator-exercise"
+    },
+    {
+      "name": "21 - Geolocation",
+      "path": "../../JavaScript30/21 - Geolocation"
+    },
+    {
+      "name": "20 - Speech Detection",
+      "path": "../../JavaScript30/20 - Speech Detection"
+    },
+    {
+      "name": "19 - Webcam Fun",
+      "path": "../../JavaScript30/19 - Webcam Fun"
+    },
+    {
+      "name": "webpack-demo-2",
+      "path": "../../JS/webpack-demo-2"
+    },
+    {
+      "name": "webpack-demo",
+      "path": "../../JS/webpack-demo"
+    },
+    {
+      "name": "test",
+      "path": "../../JS/test"
+    },
+    {
+      "name": "boilerplate",
+      "path": "../../boilerplate"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": [
+      "GIT",
+      "weather-app",
+      "webpack-boilerplate",
+      "ToDo",
+      "form validation",
+      "APIs",
+      "Restaurant-page",
+      "21 - Geolocation",
+      "20 - Speech Detection",
+      "19 - Webcam Fun",
+      "webpack-demo-2",
+      "webpack-demo",
+      "test",
+      "boilerplate"
+    ]
+  }
+}
